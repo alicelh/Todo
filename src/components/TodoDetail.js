@@ -86,19 +86,19 @@ class TodoDetail extends Component{
                         dateFormat="MMM d"
                         readonly unselectable="on"
                     />
-                    <DropdownButton id="dropdown-project-button" variant="primary" title={this.state.project}>
+                    <DropdownButton id="dropdown-project-button" variant="primary" title={this.state.project} className="item-choosed">
                     {projects.map((pro,i)=>
                         <Dropdown.Item key={i} onSelect={this.handleProjectChange} eventKey={pro.name}>{pro.name}</Dropdown.Item>
                     )}
                     </DropdownButton>
-                    <DropdownButton id="dropdown-priority-button" variant={"danger"} title={"Priority "+this.state.priority}>
+                    <DropdownButton id="dropdown-priority-button" variant={"danger"} title={"Priority "+this.state.priority} className="item-choosed">
                         <Dropdown.Item onSelect={this.handlePriorityChange} eventKey={1}>Priority 1</Dropdown.Item>
                         <Dropdown.Item onSelect={this.handlePriorityChange} eventKey={2}>Priority 2</Dropdown.Item>
                         <Dropdown.Item onSelect={this.handlePriorityChange} eventKey={3}>Priority 3</Dropdown.Item>
                         <Dropdown.Item onSelect={this.handlePriorityChange} eventKey={4}>Priority 4</Dropdown.Item>
                     </DropdownButton>
                     <button
-                        className="btn-status"
+                        className="btn-status item-choosed"
                         onClick={(e) => handleUpdateTodo(e, updateTodo, _id, {
                             completed: !completed
                         })}>

@@ -23,13 +23,21 @@ export default class Header extends Component{
   render(){
     return (
       <Navbar bg="dark" variant="dark" className="navbar-fixed-top">
+        <img
+          alt=""
+          src={require('./images/menu.png')}
+          width="30"
+          height="30"
+          className="menuImg align-top"
+          onClick={this.props.displayLeftSide}
+        />
         <Navbar.Brand href="#home">
           <img
             alt=""
             src={require('./images/logo.png')}
             width="30"
             height="30"
-            className="d-inline-block align-top"
+            className="brandImg align-top"
           />
           <span style={{fontSize:'25px', lineHeight:'30px', marginLeft:'10px'}} >Todo</span>
         </Navbar.Brand>
@@ -38,8 +46,10 @@ export default class Header extends Component{
           </Nav>
           <Form inline>
             <button type="button" className="add-button" onClick={this.props.modalShow}><img alt={''} src={require('./images/add.png')} style={{width:"35px",height:"35px"}}/></button>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" value={this.state.text} onChange={this.handleChange}/>
+            <div className="searchForm">
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" xs={2} md={3} value={this.state.text} onChange={this.handleChange}/>
             <Button variant="outline-success" style={{height:'35px'}} onClick={this.handleSubmit}>Search</Button>
+            </div>
           </Form>
         </Navbar.Collapse>
       </Navbar>

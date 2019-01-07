@@ -4,6 +4,58 @@ a:-webkit-any-link {
 	text-decoration: none;
 }
 
+@media(min-width: 300px){
+	.left-side{
+		width:240px;
+		height: 100%;
+		padding: 10px;
+	}
+	.menuImg{
+		display: none;
+	}
+	.brandImg{
+		display: initial;
+	}
+	.choose-item{
+		flex-flow: wrap;
+	}
+}
+
+@media(max-width: 590px){
+	.left-side{
+		left: -240px;
+		width:240px;
+		position: absolute;
+	}
+	.searchForm{
+		display: none;
+	}
+	.menuImg{
+		display: initial;
+	}
+	.brandImg{
+		display: none;
+	}
+}
+
+@media(min-width: 590px){
+	.left-side{
+		position: initial;
+	}
+}
+
+@media(max-width: 860px){
+	.datetime{
+		display: none;
+	}
+}
+
+@media(min-width: 1000px){
+	.left-side{
+		padding: 30px;
+	}
+}
+
 body,html {
 	width:100%;
 	height:100%;
@@ -45,12 +97,12 @@ button:focus{
 }
 
 .left-side{
-	padding: 30px 30px;
 	background-color: #f1f1f1;
+	z-index: 100;
 	.list-group{
 		a{
 			border: none;
-			padding: 5px 20px;
+			padding: 5px 0px 5px 15px;
 		}
 	}
 	nav{
@@ -214,6 +266,9 @@ textarea {
 }
 
 .addBoard {
+	.react-datepicker-wrapper{
+		margin-left: 5px;
+	}
 	textarea {
 		width: 100%;
 		height: 60px;
@@ -234,6 +289,11 @@ textarea {
 		caret-color: transparent;
 		text-align: right;
 		float: left;
+	}
+	.btn{
+		margin-left: 10px;
+		margin-bottom: 3px;
+		width: 90px;
 	}
 	.modal-footer{
 		justify-content:space-between;
@@ -398,6 +458,9 @@ textarea {
 	border: none;
 	padding:10px;
 	height:100%;
+	.react-datepicker-wrapper{
+		margin-left: 5px;
+	}
 	form {
 		input,
 		textarea {
@@ -455,6 +518,8 @@ textarea {
 		}
 		.btn-save,.btn-delete{
 			margin-left: 10px;
+			margin-bottom: 3px;
+			width: 90px;
 		}
 		.btn-primary{
 			background-color: #17a2b8;
