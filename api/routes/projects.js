@@ -3,8 +3,9 @@ const router = express.Router();
 const Project = require('../models/Project');
 
 /* GET /projects listing. */
-router.get('/', (req, res, next) => {
-  Project.find().sort({ updatedAt: -1 }).exec((err, projects) => {
+router.post('/all', (req, res, next) => {
+  console.log(req.body);
+  Project.find(req.body).sort({ updatedAt: -1 }).exec((err, projects) => {
     if (err) return next(err);
     res.json(projects);
   });
@@ -20,7 +21,7 @@ router.post('/', (req, res, next) => {
   });
 });
 
-/* DELETE /todos/:id */
+/* DELETE /projects/:id */
 router.delete('/:id', (req, res, next) => {
   Project.findByIdAndRemove(req.params.id, req.body, (err, project) => {
     if (err) return next(err);

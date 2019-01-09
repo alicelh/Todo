@@ -3,14 +3,16 @@ import { getTodoToday, getTodoWeek, getTodoInbox } from '../actions';
 import TimeList from '../components/TimeList';
 
 const mapStateToProps = (state, props) => {
-  return {};
+  return {
+    auth: state.auth
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getTodosToday: () => dispatch(getTodoToday()),
-    getTodosInbox: () => dispatch(getTodoInbox()),
-    getTodosWeek: () => dispatch(getTodoWeek())
+    getTodosToday: (id) => dispatch(getTodoToday({userId:id})),
+    getTodosInbox: (id) => dispatch(getTodoInbox({userId:id})),
+    getTodosWeek: (id) => dispatch(getTodoWeek({userId:id}))
   };
 };
 

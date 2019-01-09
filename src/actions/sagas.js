@@ -1,6 +1,8 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
-import { getProjects, postProject, deleteProject, getTodosInbox, getTodosByDay, getTodosByWeek,postTodo, deleteTodo, putTodo } from '../api';
+import { registerUsers, loginUsers ,getProjects, postProject, deleteProject, getTodosInbox, getTodosByDay, getTodosByWeek,postTodo, deleteTodo, putTodo } from '../api';
 import * as types from './types';
+import jwt_decode from 'jwt-decode';
+import {setAuthToken} from '../api';
 
 function* handleServerResponse(todo, success, failed, errorMsg, additional = {}) {
     if (todo && todo.name) {
@@ -10,8 +12,8 @@ function* handleServerResponse(todo, success, failed, errorMsg, additional = {})
     }
 }
 
-export function * getProject(){
-    const project = yield call(getProjects);
+export function * getProject(action){
+    const project = yield call(getProjects,action.userId);
     yield put({
         type: types.GET_PROJECT_SUCCESS,
         projects: project
@@ -40,8 +42,8 @@ function* watchDeleteProjects(){
     yield takeEvery(types.DELETE_PROJECT, removeProject);
 }
 
-export function * getTodoInbox(){
-    const todo = yield call(getTodosInbox);
+export function * getTodoInbox(action){
+    const todo = yield call(getTodosInbox,action.userId);
     yield put({
         type: types.GET_TODO_INBOX_SUCCESS,
         todos: todo
@@ -52,8 +54,8 @@ function* watchGetTodoInbox() {
     yield takeEvery(types.GET_TODO_INBOX, getTodoInbox);
 }
 
-export function * getTodoToday(){
-    const todo = yield call(getTodosByDay);
+export function * getTodoToday(action){
+    const todo = yield call(getTodosByDay,action.userId);
     yield put({
         type: types.GET_TODO_TODAY_SUCCESS,
         todos: todo
@@ -64,8 +66,8 @@ function* watchGetTodoToday() {
     yield takeEvery(types.GET_TODO_TODAY, getTodoToday);
 }
 
-export function * getTodoWeek(){
-    const todo = yield call(getTodosByWeek);
+export function * getTodoWeek(action){
+    const todo = yield call(getTodosByWeek,action.userId);
     yield put({
         type: types.GET_TODO_WEEK_SUCCESS,
         todos: todo
@@ -144,9 +146,85 @@ function* watchUpdateTodo() {
     yield takeEvery(types.UPDATE_TODO_CLICK, updateTodo);
 }
 
+export function* registerUser(action){
+    try{
+        const user = yield call(registerUsers, action.user);
+        if(user._id){
+            // yield put(Object.assign({}, { type: types.REGISTER_USER_SUCCESS, user }, {}));
+            action.history.push('/login');
+        }else{
+            yield put({
+                type: types.REGISTER_USER_FAILED,
+                error: user
+            });
+        }
+    }catch(e){
+        yield put({
+            type: types.REGISTER_USER_FAILED,
+            user: e
+        });
+    }
+}
+
+function* watchRegisterUser() {
+    yield takeEvery(types.REGISTER_USER, registerUser);
+}
+
+export function* loginUser(action){
+    try{
+        const res = yield call(loginUsers, action.user);
+        if(res.success){
+            const { token } = res;
+            localStorage.setItem('jwtToken', token);
+            setAuthToken(token);
+            const user = jwt_decode(token);
+            // dispatch(setCurrentUser(decoded));
+            yield put({type: types.SET_CURRENT_USER, user});
+            yield put({type: types.GET_TODO_TODAY, userId:user._id});
+            yield put({type: types.GET_PROJECT, userId:user._id});
+        } else{
+            yield put({
+                type: types.LOGIN_USER_FAILED,
+                error: res
+            });
+        }
+    }catch(e){
+        yield put({
+            type: types.LOGIN_USER_FAILED,
+            error: e
+        });
+    }
+}
+
+function* watchLoginUser() {
+    yield takeEvery(types.LOGIN_USER, loginUser);
+}
+
+export function* logoutUser(action){
+    localStorage.removeItem('jwtToken');
+    setAuthToken(false);
+    yield put({type:types.SET_CURRENT_USER,user:{}});
+    yield put({
+        type: types.GET_PROJECT_SUCCESS,
+        projects: {}
+    })
+    yield put({
+        type: types.GET_TODO_INBOX_SUCCESS,
+        todos: {}
+    });
+    action.history.push('/login');
+}
+
+function* watchLogoutUser() {
+    yield takeEvery(types.LOGOUT_USER, logoutUser);
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield [
+        watchLogoutUser(),
+        watchLoginUser(),
+        watchRegisterUser(),
         watchDeleteProjects(),
         watchAddProjects(),
         watchGetProjects(),

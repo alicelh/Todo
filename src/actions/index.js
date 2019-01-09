@@ -1,8 +1,10 @@
 import * as types from './types';
+import {setAuthToken} from '../api';
 
-export function getProject(){
+export function getProject(id){
     return {
         type: types.GET_PROJECT,
+        userId: id
     }
 }
 
@@ -20,21 +22,24 @@ export function deleteProject(id){
     }
 }
 
-export function getTodoInbox(){
+export function getTodoInbox(id){
     return {
         type: types.GET_TODO_INBOX,
+        userId: id
     }
 }
 
-export function getTodoToday(){
+export function getTodoToday(id){
     return {
         type: types.GET_TODO_TODAY,
+        userId: id
     }
 }
 
-export function getTodoWeek(){
+export function getTodoWeek(id){
     return {
         type: types.GET_TODO_WEEK,
+        userId:id
     }
 }
 
@@ -67,4 +72,33 @@ export function moveTodo(dragIndex, hoverIndex, todo) {
         hoverIndex,
         todo
     };
+}
+
+export function registerUser(user,history){
+    return{
+        type: types.REGISTER_USER,
+        user: user,
+        history: history
+    }
+}
+
+export function LoginUser(user){
+    return{
+        type: types.LOGIN_USER,
+        user
+    }
+}
+
+export function setCurrentUser(user){
+    return {
+        type: types.SET_CURRENT_USER,
+        user: user
+    }
+}
+
+export function logoutUser(history){
+    return{
+        type: types.LOGOUT_USER,
+        history:history
+    }
 }

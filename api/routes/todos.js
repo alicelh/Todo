@@ -4,28 +4,29 @@ var moment = require('moment');
 const Todo = require('../models/Todo');
 
 /* GET /todos listing. */
-router.get('/inbox', (req, res, next) => {
-  Todo.find().sort({ updatedAt: -1 }).exec((err, todos) => {
+router.post('/inbox', (req, res, next) => {
+  console.log(req.body);
+  Todo.find(req.body).sort({ updatedAt: -1 }).exec((err, todos) => {
     if (err) return next(err);
     res.json(todos);
   });
 });
 
 /* GET /todos/today listing. */
-router.get('/today', (req, res, next) => {
+router.post('/today', (req, res, next) => {
   let start = moment().startOf('day').toDate(); 
   let end = moment().endOf('day').toDate();
-  Todo.find({startDate:{$gte:start,$lte:end}}).sort({ updatedAt: -1 }).exec((err, todos) => {
+  Todo.find({userId:req.body.userId,startDate:{$gte:start,$lte:end}}).sort({ updatedAt: -1 }).exec((err, todos) => {
     if (err) return next(err);
     res.json(todos);
   });
 });
 
 /* GET /todos/week listing. */
-router.get('/week', (req, res, next) => {
+router.post('/week', (req, res, next) => {
   let start = moment().startOf('week').toDate(); 
   let end = moment().endOf('week').toDate();
-  Todo.find({startDate:{$gte:start,$lte:end}}).sort({ updatedAt: -1 }).exec((err, todos) => {
+  Todo.find({userId:req.body.userId,startDate:{$gte:start,$lte:end}}).sort({ updatedAt: -1 }).exec((err, todos) => {
     if (err) return next(err);
     res.json(todos);
   });

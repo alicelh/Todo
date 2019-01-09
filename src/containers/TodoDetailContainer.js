@@ -4,6 +4,7 @@ import TodoDetail from '../components/TodoDetail';
 
 const mapStateToProps = (state, props) => {
     const { index } = props.match.params;
+    console.log(state.todos);
     return {
         todo: state.todos[index],
         projects: state.projects

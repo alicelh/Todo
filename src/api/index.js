@@ -2,15 +2,25 @@ import fetch from 'isomorphic-fetch';
 
 const TODOS_URL = 'http://localhost:3001/todos';
 const PROJECTS_URL = 'http://localhost:3001/projects';
+const USERS_URL = 'http://localhost:3001/users';
 const jsonHeaders = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
 };
 
-export async function getProjects() {
+export const setAuthToken = token => {
+    if(token) {
+        jsonHeaders['Authorization'] = token;
+    }
+    else {
+        delete jsonHeaders['Authorization'];
+    }
+}
+
+export async function getProjects(id) {
     try {
-        const options = { mode: 'cors', method: 'GET' };
-        const response = await fetch(PROJECTS_URL, options);
+        const options = { mode: 'cors', method: 'POST', headers: jsonHeaders, body: JSON.stringify(id)};
+        const response = await fetch(`${ PROJECTS_URL }/all`, options);
 
         return await response.json();
     } catch(e) {
@@ -51,9 +61,9 @@ export async function deleteProject(id) {
     }
 }
 
-export async function getTodosInbox() {
+export async function getTodosInbox(id) {
     try {
-        const options = { mode: 'cors', method: 'GET' };
+        const options = { mode: 'cors', method: 'POST', headers: jsonHeaders, body: JSON.stringify(id)};
         const response = await fetch(`${TODOS_URL}/inbox`, options);
 
         return await response.json();
@@ -62,9 +72,9 @@ export async function getTodosInbox() {
     }
 }
 
-export async function getTodosByDay() {
+export async function getTodosByDay(id) {
     try {
-        const options = { mode: 'cors', method: 'GET' };
+        const options = { mode: 'cors', method: 'POST', headers: jsonHeaders, body: JSON.stringify(id)};
         const response = await fetch(`${TODOS_URL}/today`, options);
 
         return await response.json();
@@ -73,9 +83,9 @@ export async function getTodosByDay() {
     }
 }
 
-export async function getTodosByWeek() {
+export async function getTodosByWeek(id) {
     try {
-        const options = { mode: 'cors', method: 'GET' };
+        const options = { mode: 'cors', method: 'POST', headers: jsonHeaders, body: JSON.stringify(id)};
         const response = await fetch(`${TODOS_URL}/week`, options);
 
         return await response.json();
@@ -85,7 +95,6 @@ export async function getTodosByWeek() {
 }
 
 export async function postTodo(todo) {
-    console.log(todo);
     try {
         const options = {
             mode: 'cors',
@@ -128,6 +137,39 @@ export async function deleteTodo(id) {
         };
 
         const response = await fetch(`${ TODOS_URL }/${id}`, options);
+
+        return await response.json();
+    } catch(e) {
+        throw e;
+    }
+}
+
+export async function registerUsers(user) {
+    try {
+        const options = {
+            mode: 'cors',
+            method: 'POST',
+            headers: jsonHeaders,
+            body: JSON.stringify(user)
+        };
+
+        const response = await fetch(`${USERS_URL}/register`, options);
+        return await response.json();
+    } catch(e) {
+        throw e;
+    }
+}
+
+export async function loginUsers(user) {
+    try {
+        const options = {
+            mode: 'cors',
+            method: 'POST',
+            headers: jsonHeaders,
+            body: JSON.stringify(user)
+        };
+
+        const response = await fetch(`${USERS_URL}/login`, options);
 
         return await response.json();
     } catch(e) {

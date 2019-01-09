@@ -21,7 +21,7 @@ const handleSave = (router, nameInput, noteInput, startDate, project, priority, 
         priority: priority
     });
 
-    withExit(handleUpdateTodo)(router, '/', params);
+    withExit(handleUpdateTodo)(router, '/main', params);
 };
 
 class TodoDetail extends Component{
@@ -119,7 +119,7 @@ class TodoDetail extends Component{
                     onClick={(e) => {
                         e.preventDefault();
                         onRemove(_id);
-                        router.push('/');
+                        router.push('/main');
                     }}>
                     DELETE
                 </Button>

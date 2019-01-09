@@ -122,13 +122,13 @@ class Todo extends Component{
                 <label htmlFor={`checkbox${index}`} className={`circle${priority}`} style={{borderColor:circlecolor}}></label>
             </ul>
             <div className='content'>
-                <Link to={`/${index}`}>
+                <Link to={`/main/${index}`}>
                 <div className={completed ? 'done' : ''}>
                     <h4 style={{textDecoration:this.state.checked?'line-through':'none'}}> { name } </h4>
                     <p style={{textDecoration:this.state.checked?'line-through':'none'}}> { note} </p>
                     <div>
                         <Button variant="success" className="time-button"><span>{moment(startDate).format('MMM D')}</span></Button>
-                        <Button variant="primary" className="project-button">{project}</Button>
+                        {project?<Button variant="primary" className="project-button">{project}</Button>:null}
                         <span className="datetime">
                             Last Updated: { time.toLocaleString() }
                         </span>

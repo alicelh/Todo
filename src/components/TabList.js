@@ -56,7 +56,7 @@ export default class TabList extends Component{
   }
   submitProject(e){
     if(this.state.value!==''){
-      this.props.addProject({'name':this.state.value});
+      this.props.addProject({'name':this.state.value,'userId':this.props.auth.user.id});
       this.setShowInput();
       this.setState({
         value:''
@@ -73,7 +73,7 @@ export default class TabList extends Component{
     })
   }
   render(){
-    const{setPriorityFilter, projects, setProjectFilter, deleteProject} = this.props;
+    const{setPriorityFilter, projects, setProjectFilter, deleteProject,auth} = this.props;
     return(
       <Tabs
         id="controlled-tab"

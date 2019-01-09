@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Navbar,Nav,Form,FormControl,Button } from 'react-bootstrap';
+import { Navbar,Nav,FormControl,Button } from 'react-bootstrap';
 
 export default class Header extends Component{
   constructor(){
@@ -9,6 +9,7 @@ export default class Header extends Component{
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
   handleChange(e){
     this.setState({
@@ -18,6 +19,10 @@ export default class Header extends Component{
   }
   handleSubmit(e){
     this.props.setSearchText(this.state.text)
+    e.preventDefault();
+  }
+  handleLogout(e){
+    this.props.logout();
     e.preventDefault();
   }
   render(){
@@ -44,13 +49,11 @@ export default class Header extends Component{
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
           </Nav>
-          <Form inline>
             <button type="button" className="add-button" onClick={this.props.modalShow}><img alt={''} src={require('./images/add.png')} style={{width:"35px",height:"35px"}}/></button>
-            <div className="searchForm">
+            <form className="searchForm" onSubmit={this.handleSubmit}>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" xs={2} md={3} value={this.state.text} onChange={this.handleChange}/>
-            <Button variant="outline-success" style={{height:'35px'}} onClick={this.handleSubmit}>Search</Button>
-            </div>
-          </Form>
+            </form>
+          <Button variant="outline-success" style={{height:'35px',marginLeft:'10px'}} onClick={this.handleLogout}>LogOut</Button>
         </Navbar.Collapse>
       </Navbar>
     );

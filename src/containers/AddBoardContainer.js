@@ -4,7 +4,8 @@ import AddBoard from '../components/AddBoard';
 
 const mapStateToProps = (state) => {
     return{
-        projects: state.projects
+        projects: state.projects,
+        auth: state.auth
     };
 }
 

@@ -3,18 +3,12 @@ import * as serviceWorker from './serviceWorker';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import configureStore from './store/configureStore';
 import Root from './containers/Root';
-import { getTodoToday, getProject } from './actions'
 import './styles/main.scss';
-
-const store = configureStore();
-store.dispatch(getTodoToday());
-store.dispatch(getProject());
 
 ReactDom.render(
     <AppContainer>
-        <Root store={store}/>
+        <Root/>
     </AppContainer>,
     document.getElementById('root')
 );
@@ -24,7 +18,7 @@ if (module.hot) {
         const NewRoot = require('./containers/Root').default;
         ReactDom.render(
             <AppContainer>
-                <NewRoot store={store}/>
+                <NewRoot/>
             </AppContainer>,
             document.getElementById('root')
         );

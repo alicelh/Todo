@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // Schema to enforce consistent structure.
 const TodoSchema = new mongoose.Schema({
+  userId: mongoose.Schema.Types.ObjectId,
   name: String,
   completed: { type: Boolean, default: false },
   note: { type: String, default: '' },

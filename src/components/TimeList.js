@@ -11,9 +11,10 @@ export default class TimeList extends Component{
   }
   setChooseBotton(id){
     this.setState({choose:id});
-    if(id===1) this.props.getTodosToday();
-    else if(id === 2) this.props.getTodosWeek();
-    else this.props.getTodosInbox();
+    let userId = this.props.auth.user.id;
+    if(id===1) this.props.getTodosToday(userId);
+    else if(id === 2) this.props.getTodosWeek(userId);
+    else this.props.getTodosInbox(userId);
   }
   render() {
     return(

@@ -6,10 +6,11 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+const passport = require('passport');
 const routes = require('./routes/index');
 const todos = require('./routes/todos');
 const projects = require('./routes/projects');
+const users = require('./routes/users');
 
 const app = express();
 
@@ -21,6 +22,9 @@ mongoose.connect('mongodb://localhost/todo-api')
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(passport.initialize());
+require('./passport')(passport);
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,6 +34,7 @@ app.use(cors());
 app.use('/', routes);
 app.use('/todos', todos);
 app.use('/projects',projects);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

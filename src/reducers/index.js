@@ -1,5 +1,6 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
+import isEmpty from '../validation/is-empty';
 import * as types from '../actions/types';
 
 
@@ -59,9 +60,42 @@ const projects = (state=[],action)=>{
     }
 }
 
+const errors = (state=[],action)=>{
+    switch(action.type){
+        case types.LOGIN_USER_FAILED:
+            return action.error;
+
+        case types.REGISTER_USER_FAILED:
+            return action.error;
+
+        default:
+            return state;
+    }
+}
+
+const initialState = {
+    isAuthenticated: false,
+    user: {}
+}
+
+const auth = (state = initialState, action )=>{
+    switch(action.type) {
+        case types.SET_CURRENT_USER:
+            return {
+                ...state,
+                isAuthenticated: !isEmpty(action.user),
+                user: action.user
+            }
+        default: 
+            return state;
+    }
+}
+
 const rootReducer = combineReducers({
     todos,
     projects,
+    errors,
+    auth,
     routing
 });
 

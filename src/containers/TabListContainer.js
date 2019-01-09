@@ -4,13 +4,14 @@ import { addProject, deleteProject } from '../actions';
 
 const mapStateToProps = (state, props) => {
   return {
-    projects : state.projects
+    projects : state.projects,
+    auth: state.auth
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch,ownProps) => {
   return {
-    addProject: (name)=>{if(name!=='') dispatch(addProject(name))},
+    addProject: (json)=>{if(json.name!=='') dispatch(addProject(json))},
     deleteProject: (id)=>{dispatch(deleteProject(id))}
   };
 };

@@ -6,12 +6,13 @@ import PropTypes from 'prop-types';
 
 import "react-datepicker/dist/react-datepicker.css";
 
-const handleFormSubmit = (nameInput, noteInput, startDate, project, priority, onCreate) => {
+const handleFormSubmit = (nameInput, noteInput, startDate, project, priority, id, onCreate) => {
     const name = nameInput.value;
     const note = noteInput.value;
+    const userId = id;
 
     if (!name) return;
-    onCreate({ name, note, startDate, project, priority });
+    onCreate({ name, note, startDate, project, priority, userId });
     nameInput.value = '';
     noteInput.value = '';
 };
@@ -101,7 +102,7 @@ export default class AddBoard extends Component{
         <Button variant="outline-secondary" onClick={this.props.onHide}>Close</Button>
         <Button variant="outline-success" onClick={(e) => {
                     e.preventDefault();
-                    handleFormSubmit(nameInput, noteInput, this.state.startDate, this.state.project,this.state.priority, onAddTodo);
+                    handleFormSubmit(nameInput, noteInput, this.state.startDate, this.state.project,this.state.priority,this.props.auth.user.id, onAddTodo);
                 }}>Submit</Button>
         </div>
       </Modal.Footer>

@@ -2,12 +2,12 @@ import React,{Component} from 'react';
 import ReactDom from 'react-dom';
 import { Route, Switch } from 'react-router';
 import TodosContainer from '../containers/TodosContainer';
-import Header from '../components/Header';
 import AddBoardContainer from '../containers/AddBoardContainer';
 import TodoDetailContainer from '../containers/TodoDetailContainer';
 import {Container,Row,Col} from 'react-bootstrap';
 import TimeListContainer from '../containers/TimeListContainer';
 import TabListContainer from '../containers/TabListContainer';
+import HeaderContainer from '../containers/HeaderContainer';
 
 export default class App extends Component {
   constructor(){
@@ -42,12 +42,11 @@ export default class App extends Component {
     this.setState({
       showLeft: !this.state.showLeft
     })
-    console.log(this.state.showLeft);
   }
   render(){
     return (
       <div className="main">
-      <Header modalShow={this.modalShow} setSearchText={this.setSearchText} displayLeftSide = {this.displayLeftSide}/>
+      <HeaderContainer modalShow={this.modalShow} setSearchText={this.setSearchText} displayLeftSide = {this.displayLeftSide} history={this.props.history}/>
       <Container className="content">
         <Row style={{width:"100%"}}>
           <Col sm={5} md={4} lg={3} className="left-side" ref={this.myRef}>
@@ -57,8 +56,8 @@ export default class App extends Component {
           </Col>
           <Col sm={7} md={8} lg={9}>
             <Switch>
-              <Route exact path="/" component={()=><TodosContainer searchText={this.state.searchText} priority={this.state.priority} project={this.state.project}/>}/>
-              <Route path="/:index" component={TodoDetailContainer}/>
+              <Route exact path="/main" component={()=><TodosContainer searchText={this.state.searchText} priority={this.state.priority} project={this.state.project}/>}/>
+              <Route exact path="/main/:index" component={TodoDetailContainer}/>
             </Switch>
           </Col>
         </Row>
