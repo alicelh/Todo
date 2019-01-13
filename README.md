@@ -1,3 +1,7 @@
+## `npm install`
+
+install dependency
+
 ## `mongod`
 
 Open database server
@@ -9,6 +13,11 @@ link server
 ## `npm start`
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+### system interface
+
+![avatar](interface.png)
+![avatar](main.png)
 
 ----
 
