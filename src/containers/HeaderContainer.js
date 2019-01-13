@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import {setAuthToken} from '../api';
-import {setCurrentUser,logoutUser} from '../actions'
+import {setCurrentUser} from '../actions'
 
 const mapStateToProps = (state) => {
     return {

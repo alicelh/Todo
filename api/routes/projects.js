@@ -4,7 +4,7 @@ const Project = require('../models/Project');
 
 /* GET /projects listing. */
 router.post('/all', (req, res, next) => {
-  console.log(req.body);
+  console.log('project',req.body);
   Project.find(req.body).sort({ updatedAt: -1 }).exec((err, projects) => {
     if (err) return next(err);
     res.json(projects);

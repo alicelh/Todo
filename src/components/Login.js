@@ -1,18 +1,36 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import { Navbar,Button,ButtonToolbar } from 'react-bootstrap';
+import { Navbar,Button,ButtonToolbar,Modal,Tabs,Tab } from 'react-bootstrap';
 
 class Login extends Component {
     constructor() {
         super();
         this.state = {
+            name: '',
             email: '',
             password: '',
-            errors: {}
+            password_confirm: '',
+            errors: {},
+            showModal: false
         }
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleRegister = this.handleRegister.bind(this);
+        this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+        this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
+        this.showModal= this.showModal.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+    }
+
+    showModal(e){
+        e.preventDefault();
+        this.setState({
+            showModal: true
+        })
+    }
+
+    handleClose(e){
+        this.setState({
+            showModal: false
+        })
     }
 
     handleInputChange(e) {
@@ -21,7 +39,7 @@ class Login extends Component {
         })
     }
 
-    handleSubmit(e) {
+    handleLoginSubmit(e) {
         e.preventDefault();
         const user = {
             email: this.state.email,
@@ -30,9 +48,15 @@ class Login extends Component {
         this.props.loginUser(user);
     }
 
-    handleRegister(e){
-      this.props.history.push('/register');
-      e.preventDefault();
+    handleRegisterSubmit(e) {
+        e.preventDefault();
+        const user = {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            password_confirm: this.state.password_confirm
+        }
+        this.props.registerUser(user);
     }
     
     componentDidMount() {
@@ -68,13 +92,20 @@ class Login extends Component {
               <span style={{fontSize:'25px', lineHeight:'30px', marginLeft:'10px'}} >Todo</span>
             </Navbar.Brand>
           </Navbar>
-          <div className="container" style={{ marginTop: '50px', width: '700px'}}>
-          <h2 style={{marginBottom: '40px'}}>登 录</h2>
-          <form onSubmit={ this.handleSubmit }>
+          <div className="loginContainer">
+            <Button variant="outline-success" onClick={this.showModal}>登录</Button>
+          </div>
+
+          <Modal show={this.state.showModal} onHide={this.handleClose}  size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered id='modalLRForm'>
+            <Tabs defaultActiveKey="Login" id="uncontrolled-tab-example">
+            <Tab eventKey="Login" title="登录">
+            <form onSubmit={ this.handleLoginSubmit } >
               <div className="form-group">
                   <input
                   type="email"
-                  placeholder="Email"
+                  placeholder="邮箱"
                   className={classnames('form-control form-control-lg', {
                       'is-invalid': errors.email
                   })}
@@ -88,7 +119,7 @@ class Login extends Component {
               <div className="form-group">
                   <input
                   type="password"
-                  placeholder="Password"
+                  placeholder="密码"
                   className={classnames('form-control form-control-lg', {
                       'is-invalid': errors.password
                   })} 
@@ -99,16 +130,72 @@ class Login extends Component {
                   />
                   {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
               </div>
-              <ButtonToolbar style={{float:'right'}}>
-                  <Button variant="success" onClick={this.handleRegister}>
-                      切换到注册页面
-                  </Button>
                   <Button variant="primary" type="submit">
                       登录
                   </Button>
-              </ButtonToolbar>
           </form>
-      </div>
+            </Tab>
+            <Tab eventKey="Register" title="注册">
+            <form onSubmit={ this.handleRegisterSubmit }>
+              <div className="form-group">
+                  <input
+                  type="text"
+                  placeholder="用户名"
+                  className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.name
+                  })}
+                  name="name"
+                  onChange={ this.handleInputChange }
+                  value={ this.state.name }
+                  />
+                  {errors.name && (<div className="invalid-feedback">{errors.name}</div>)}
+              </div>
+              <div className="form-group">
+                  <input
+                  type="email"
+                  placeholder="邮箱"
+                  className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.email
+                  })}
+                  name="email"
+                  onChange={ this.handleInputChange }
+                  value={ this.state.email }
+                  />
+                  {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
+              </div>
+              <div className="form-group">
+                  <input
+                  type="password"
+                  placeholder="密码"
+                  className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.password
+                  })}
+                  name="password"
+                  onChange={ this.handleInputChange }
+                  value={ this.state.password }
+                  />
+                  {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
+              </div>
+              <div className="form-group">
+                  <input
+                  type="password"
+                  placeholder="确认密码"
+                  className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.password_confirm
+                  })}
+                  name="password_confirm"
+                  onChange={ this.handleInputChange }
+                  value={ this.state.password_confirm }
+                  />
+                  {errors.password_confirm && (<div className="invalid-feedback">{errors.password_confirm}</div>)}
+              </div>
+                  <Button variant="primary" type="submit">
+                      注册
+                  </Button>
+          </form>
+            </Tab>
+            </Tabs>        
+        </Modal>
       </div>
       )
   }

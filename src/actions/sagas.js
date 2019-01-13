@@ -151,7 +151,7 @@ export function* registerUser(action){
         const user = yield call(registerUsers, action.user);
         if(user._id){
             // yield put(Object.assign({}, { type: types.REGISTER_USER_SUCCESS, user }, {}));
-            action.history.push('/login');
+            alert('注册成功！')
         }else{
             yield put({
                 type: types.REGISTER_USER_FAILED,
@@ -178,10 +178,10 @@ export function* loginUser(action){
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
             const user = jwt_decode(token);
-            // dispatch(setCurrentUser(decoded));
+            const userId = {userId:user.id};
             yield put({type: types.SET_CURRENT_USER, user});
-            yield put({type: types.GET_TODO_TODAY, userId:user._id});
-            yield put({type: types.GET_PROJECT, userId:user._id});
+            yield put({type: types.GET_TODO_TODAY, userId});
+            yield put({type: types.GET_PROJECT, userId});
         } else{
             yield put({
                 type: types.LOGIN_USER_FAILED,

@@ -5,7 +5,7 @@ export default class TimeList extends Component{
   constructor(){
     super();
     this.state={
-      choose: 1
+      choose: 3
     }
     this.setChooseBotton = this.setChooseBotton.bind(this);
   }
@@ -19,24 +19,24 @@ export default class TimeList extends Component{
   render() {
     return(
       <ListGroup>
-        <ListGroup.Item action className={this.state.choose===1? 'choosed': ''} onClick = {()=>this.setChooseBotton(1)}>
-          <div>
-            <img alt={''} src={require('./images/today.png')}/>
-            <span>Today</span>
-          </div>
-        </ListGroup.Item >
-        <ListGroup.Item action className={this.state.choose===2? 'choosed': ''} onClick = {()=>this.setChooseBotton(2)}>
-          <div>
-            <img alt={''} src={require('./images/calendar.png')} style={{width:'33px',height:'25px'}}/>
-            <span>This Week</span>
-          </div>
-        </ListGroup.Item>
         <ListGroup.Item action className={this.state.choose===3? 'choosed': ''} onClick = {()=>this.setChooseBotton(3)}>
           <div>
             <img alt={''} src={require('./images/inbox.png')}/>
             <span>Inbox</span>
           </div>
         </ListGroup.Item>
+        <ListGroup.Item action className={this.state.choose===2? 'choosed': ''} onClick = {()=>this.setChooseBotton(2)}>
+          <div>
+            <img alt={''} src={require('./images/calendar.png')} style={{width:'33px',height:'25px'}}/>
+            <span>This Week</span>
+          </div>
+        </ListGroup.Item>
+        <ListGroup.Item action className={this.state.choose===1? 'choosed': ''} onClick = {()=>this.setChooseBotton(1)}>
+          <div>
+            <img alt={''} src={require('./images/today.png')}/>
+            <span>Today</span>
+          </div>
+        </ListGroup.Item >
       </ListGroup>
     );
   }

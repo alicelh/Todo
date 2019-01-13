@@ -16,6 +16,7 @@ router.post('/inbox', (req, res, next) => {
 router.post('/today', (req, res, next) => {
   let start = moment().startOf('day').toDate(); 
   let end = moment().endOf('day').toDate();
+  console.log(req.body);
   Todo.find({userId:req.body.userId,startDate:{$gte:start,$lte:end}}).sort({ updatedAt: -1 }).exec((err, todos) => {
     if (err) return next(err);
     res.json(todos);

@@ -73,7 +73,7 @@ export default class TabList extends Component{
     })
   }
   render(){
-    const{setPriorityFilter, projects, setProjectFilter, deleteProject,auth} = this.props;
+    const{setPriorityFilter, projects, setProjectFilter, deleteProject} = this.props;
     return(
       <Tabs
         id="controlled-tab"

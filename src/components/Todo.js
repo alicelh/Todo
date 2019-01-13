@@ -129,9 +129,9 @@ class Todo extends Component{
                     <div>
                         <Button variant="success" className="time-button"><span>{moment(startDate).format('MMM D')}</span></Button>
                         {project?<Button variant="primary" className="project-button">{project}</Button>:null}
-                        <span className="datetime">
+                        {/* <span className="datetime">
                             Last Updated: { time.toLocaleString() }
-                        </span>
+                        </span> */}
                     </div>
                 </div>
                 <span

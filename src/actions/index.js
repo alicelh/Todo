@@ -1,5 +1,4 @@
 import * as types from './types';
-import {setAuthToken} from '../api';
 
 export function getProject(id){
     return {
